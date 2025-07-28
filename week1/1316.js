@@ -21,11 +21,13 @@ let isGroup;
 let prevchar;
 
 array.map((string) => {
+  console.log("string", string); //
   isGroupword = true;
   groupwordFlag = false;
   prevchar = "";
   existCharList = [];
   string.split("").map((char) => {
+    console.log("char", char); //
     if (prevchar === char) isGroup = true;
     else isGroup = false;
     existCharList.map((existchar) => {

@@ -1,5 +1,5 @@
 function solution(gems) {
-  const gemCategorys = new Set();
+  const gemCategorys = new Set(gems);
   const intervalList = new Map();
   const validIntervalList = [];
   gems.forEach((gem) => {
@@ -39,7 +39,6 @@ function solution(gems) {
 //
 // -4 '모든 구간의 정보'와 '유효한 구간인지 판단할 정보'를 서로 맵핑 해야한다.    => intervalList 라는 구간 데이터 Map 객체를 만들자
 //
-// -5
 // 2. 구간 데이터를 먼저 보기좋게 전처리를 해보자
 // // intervalList =
 // // {
