@@ -36,6 +36,7 @@ def solution(distance, rocks, n):
         current_pos = 0
         
         for i in range(1, len(rocks)):
+            print("rocks[i] - rocks[current_pos]",rocks[i],rocks[current_pos])
             if rocks[i] - rocks[current_pos] < min_distance:
                 # 거리가 min_distance보다 작으면 현재 바위를 제거
                 removed += 1
@@ -61,4 +62,4 @@ def solution(distance, rocks, n):
             right = mid - 1  # 더 작은 최소 거리로 시도
     return answer
 
-print(solution(25, [2, 14, 11, 21, 17], 2))
+solution(25, [2, 14, 11, 21, 17], 2)
