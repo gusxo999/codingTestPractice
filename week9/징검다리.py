@@ -50,15 +50,15 @@ def solution(distance, rocks, n):
     # 이진 탐색으로 최대 최소 거리 찾기
     left, right = 1, distance
     answer = 0
+    repeat =0
     while left <= right:
+        repeat+=1
         mid = (left + right) // 2
-        
         if can_remove_rocks(mid):
             answer = mid
             left = mid + 1  # 더 큰 최소 거리가 가능한지 확인
         else:
             right = mid - 1  # 더 작은 최소 거리로 시도
-    
     return answer
 
 print(solution(25, [2, 14, 11, 21, 17], 2))
