@@ -1,57 +1,64 @@
+# def solution(distance, rocks, n):
+#     rocks.sort()
+#     distanceEachRock=[rocks[0]]
+#     for i in range(len(rocks)):
+#         if i==0:
+#             continue
+#         distanceEachRock.append(rocks[i]-rocks[i-1])
+#     distanceEachRock.append(distance-rocks[len(rocks)-1])
+#     for i in range(n):
+#         minValue=distance
+#         minValueIndex =len(rocks)
+#         for i in range(len(distanceEachRock)):
+#             if(minValue>distanceEachRock[i]):
+#                 minValue=distanceEachRock[i]
+#         newDistanceEachRock=distanceEachRock[0:minValueIndex]
+#         if(minValueIndex==len(distanceEachRock)):
+#             newDistanceEachRock+=[distanceEachRock[minValueIndex]+distanceEachRock[minValueIndex+1]]    
+#         else:
+#             newDistanceEachRock+=[distanceEachRock[minValueIndex]+distanceEachRock[minValueIndex-1]]
+#         newDistanceEachRock+=distanceEachRock[minValueIndex+2:len(distanceEachRock)]
+#         distanceEachRock=newDistanceEachRock
+#     newDistanceEachRock.sort()
+#     return newDistanceEachRock[0]
+
+
+
+
+
 def solution(distance, rocks, n):
     rocks.sort()
-    distanceBetweenEachRock=[rocks[0]]
-    for i in range(len(rocks)):
-        if i==0:
-            continue
-        distanceBetweenEachRock.append(rocks[i]-rocks[i-1])
-    distanceBetweenEachRock.append(distance-rocks[len(rocks)-1])
-    for i in range(n):
-        minValue=distance
-        minValueIndex =len(rocks)
-        for i in range(len(distanceBetweenEachRock)):
-            if(minValue>distanceBetweenEachRock[i]):
-                minValue=distanceBetweenEachRock[i]
-        newDistanceBetweenEachRock=distanceBetweenEachRock[0:minValueIndex]
-        if(minValueIndex==len(distanceBetweenEachRock)):
-            newDistanceBetweenEachRock+=[distanceBetweenEachRock[minValueIndex]+distanceBetweenEachRock[minValueIndex+1]]    
-        else:
-            newDistanceBetweenEachRock+=[distanceBetweenEachRock[minValueIndex]+distanceBetweenEachRock[minValueIndex-1]]
-        newDistanceBetweenEachRock+=distanceBetweenEachRock[minValueIndex+2:len(distanceBetweenEachRock)]
-        distanceBetweenEachRock=newDistanceBetweenEachRock
-    newDistanceBetweenEachRock.sort()
-    return newDistanceBetweenEachRock[0]
-
-
-
-solution(16, [1, 5, 11, 14], 1)
-
-# def correct_solution(distance, rocks, n):
-#     rocks.sort()
-#     rocks = [0] + rocks + [distance]
+    rocks = [0] + rocks + [distance]  # 시작점과 끝점 추가
     
-#     def can_achieve_min_distance(min_dist):
-#         removed = 0
-#         current_pos = 0
+    def can_remove_rocks(min_distance):
+        """주어진 최소 거리를 유지하면서 n개 이하의 바위를 제거할 수 있는지 확인"""
+        removed = 0
+        current_pos = 0
         
-#         for i in range(1, len(rocks)):
-#             if rocks[i] - rocks[current_pos] < min_dist:
-#                 removed += 1
-#                 if removed > n:
-#                     return False
-#             else:
-#                 current_pos = i
-#         return True
+        for i in range(1, len(rocks)):
+            if rocks[i] - rocks[current_pos] < min_distance:
+                # 거리가 min_distance보다 작으면 현재 바위를 제거
+                removed += 1
+                if removed > n:
+                    return False
+            else:
+                # 거리가 충분하면 현재 위치 업데이트
+                current_pos = i
+        
+        return True
     
-#     left, right = 1, distance
-#     answer = 0
+    # 이진 탐색으로 최대 최소 거리 찾기
+    left, right = 1, distance
+    answer = 0
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if can_remove_rocks(mid):
+            answer = mid
+            left = mid + 1  # 더 큰 최소 거리가 가능한지 확인
+        else:
+            right = mid - 1  # 더 작은 최소 거리로 시도
     
-#     while left <= right:
-#         mid = (left + right) // 2
-#         if can_achieve_min_distance(mid):
-#             answer = mid
-#             left = mid + 1
-#         else:
-#             right = mid - 1
-    
-#     return answer
+    return answer
+
+print(solution(25, [2, 14, 11, 21, 17], 2))
